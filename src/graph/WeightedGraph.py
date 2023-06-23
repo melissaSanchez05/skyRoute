@@ -73,7 +73,8 @@ class WeightedGraph:
     
     def getDistance(self)-> float:
         return self.totalDistance
-    def findPath(self) -> None
+    def findPath(self) -> None:
+        pass
             
     
 
