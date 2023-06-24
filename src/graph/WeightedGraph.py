@@ -1,4 +1,4 @@
-from typing import TypeVar, Generic
+from typing import TypeVar
 import sys
 
 class WeighedEdge:
@@ -19,6 +19,7 @@ class WeighedEdge:
     
 T = TypeVar('T')
 INF = sys.float_info.max
+
 class WeightedGraph:
     totalDistance = 0
     def __init__(self)->None:
