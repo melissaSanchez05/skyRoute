@@ -108,9 +108,27 @@ class WeightedGraph:
 
                     return path
                 
-                if len(currentNode) == 0:
-                    
+                if len(curretnNode) == 0:
+                    path.insert(0,curretnNode)
+                    self.totalDistance = 0
+                    return []
+                
+                unvisitedNodes = [i for i in unvisitedNodes if i != curretnNode]
 
+                neighborNodes = self.getNeigbors(curretnNode)
+
+                for neighborNode in neighborNodes:
+                    if neighborNode.getNode2() in unvisitedNodes:
+                        currentNeighborNode = neighborNode.getNode2()
+                        currentNeighborMilage = neighborNode.getWeight()
+                        totalMilage = milage[curretnNode] + currentNeighborMilage
+
+                        if totalMilage < milage[currentNeighborNode]:
+                            milage[currentNeighborNode] = totalMilage
+                            prevNode[currentNeighborNode] = curretnNode
+
+
+            return []
                 
 
 
