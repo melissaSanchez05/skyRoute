@@ -1,4 +1,5 @@
 from typing import TypeVar, Generic
+import sys
 
 class WeighedEdge:
 
@@ -17,6 +18,7 @@ class WeighedEdge:
         return self.weight
     
 T = TypeVar('T')
+INF = sys.float_info.max
 class WeightedGraph:
     totalDistance = 0
     def __init__(self)->None:
@@ -73,8 +75,49 @@ class WeightedGraph:
     
     def getDistance(self)-> float:
         return self.totalDistance
-    def findPath(self) -> None:
-        pass
+    
+    def findPath(self, node1: str, node2: str) -> []:
+        if self.nodeExist(node1) and self.nodeExist(node2):
+            path = []
+            milage = {}
+            prevNode = {}
+            unvisitedNodes = []
+            for keyId in self.nodes.keys():
+                prevNode[keyId] = ""
+                milage[keyId] = INF
+                unvisitedNodes.append(keyId)
+            
+            milage[keyId] = 0
+
+            while len(unvisitedNodes) != 0:
+                curretnNode = ""
+                minMilage = INF
+
+                for node in unvisitedNodes:
+                    if milage[node] < minMilage:
+                        minMilage = milage[node]
+                        curretnNode = node
+                    
+                if curretnNode = node2:
+                    backTrackNode = node2
+                    self.totalDistance = minMilage
+
+                    while len(backTrackNode) != 0:
+                        path.insert(0, backTrackNode)
+                        backTrackNode = prevNode[backTrackNode]
+
+                    return path
+                
+                if len(currentNode) == 0:
+                    
+
+                
+
+
+
+        return []
+
+        
             
     
 
