@@ -77,7 +77,7 @@ class WeightedGraph:
     def getDistance(self)-> float:
         return self.totalDistance
     
-    def findPath(self, node1: str, node2: str) -> []:
+    def findPath(self, node1: str, node2: str):
         if self.nodeExist(node1) and self.nodeExist(node2):
             path = []
             milage = {}
@@ -99,7 +99,7 @@ class WeightedGraph:
                         minMilage = milage[node]
                         curretnNode = node
                     
-                if curretnNode = node2:
+                if curretnNode == node2:
                     backTrackNode = node2
                     self.totalDistance = minMilage
 
