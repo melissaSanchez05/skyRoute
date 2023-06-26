@@ -1,0 +1,7 @@
+{
+    "python.analysis.extraPaths": [
+        "./src/tps",
+        "./src/graph",
+        "./src/graph"
+    ]
+}

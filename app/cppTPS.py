@@ -1,11 +1,18 @@
-from cppTPS_Transaction import cppTPS_Transaction
+class cppTPS_Transaction:
+
+    def doTransaction(self) -> None:
+            pass
+    def undoTransaction(self) -> None:
+        pass
+    def __str__(self) -> str:
+        pass
 
 class cppTPS:
     def __init__(self):
         self.performingDo = False
         self.performingUndo = False
         self.mostRecentTransactions  = -1
-        self.transactions = []
+        self.transactions : list[cppTPS_Transaction]= []
    
     def isPerformingDo(self) -> bool:
         return self.performingDo
