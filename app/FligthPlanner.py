@@ -199,7 +199,6 @@ def processUserInput()-> bool:
             inputStack-=1
         else:
             print("There are not transaction to redo.")
-            print("printing redo from tps: " + str(tps.hasTransactionRedo()))
     elif entry == "E":
         tps.clearAllTransactions()
         inputStops.clear()
