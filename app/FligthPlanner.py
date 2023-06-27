@@ -45,6 +45,7 @@ def displayMenu()-> str:
     menu = "ENTER A SELECTION \n"
     menu+= "S) Add a Stop to your Trip \n"
     menu+="U) Undo \n"
+    menu+="R) Redo \n"
     menu+="E) Empty Trip \n"
     menu+="Q) Quit \n"
     menu+="-"
@@ -81,6 +82,8 @@ def initAllAirports():
     AirportGraph.addNode("SLC",  Airport("SLC", 40, 46, 111, 58))
     AirportGraph.addNode("VGT",  Airport("VGT", 36, 5, 115, 10))
 
+    initEdge("AUS", "DFW")
+    initEdge("AVL", "IND")
     initEdge("BOS", "PWM")
     initEdge("BUF", "CLE")
     initEdge("BVT", "BGR")
@@ -132,6 +135,7 @@ def initAllAirports():
     initEdge("SLC", "SEA")
     initEdge("VGT", "PHX")
 
+
 def initEdge(node1, node2):
     a1 : Airport = AirportGraph.getNodeData(node1)   
     a2 = AirportGraph.getNodeData(node2) 
@@ -172,29 +176,30 @@ def processUserInput()-> bool:
         if not AirportGraph.hasNeighborNode(airportId):
             print("Airport destination has no connecting flights")
             return True
-        
-        while inputStack > 0:
-            inputStops.pop()
-            totalTripMilage.pop()
-            inputStack-=1
-        inputStack = 0
+        if inputStack > 0:
+            while inputStack > 0:
+                inputStops.pop()
+                totalTripMilage.pop()
+                inputStack-=1
+            inputStack = 0
 
         transaction = AddStop_Transaction(inputStops,airportId)
         inputStops.append(airportId)
         tps.addTransaction(transaction)
 
     elif entry == "U":
-        if (len(inputStops) - inputStack) > 0:
+        if ((len(inputStops) - inputStack) > 0):
             tps.undoTransaction()
-            inputStack-=1
+            inputStack+=1
         else:
             print("There are not transaction to undo.")
     elif entry == "R":
-        if tps.hasTransactionRedo():
+        if inputStack > 0:
             tps.doTransaction()
             inputStack-=1
         else:
             print("There are not transaction to redo.")
+            print("printing redo from tps: " + str(tps.hasTransactionRedo()))
     elif entry == "E":
         tps.clearAllTransactions()
         inputStops.clear()
@@ -218,7 +223,7 @@ def displayCurrentTrip():
     print("Trip Stops: ")
     if (len(inputStops) - inputStack) > 0:
 
-        for i in range(inputStack, len(inputStops)):
+        for i in range(len(inputStops) - inputStack):
             print(str(i + 1 ) +". " + inputStops[i])
     print()
     print("Trip legs: ")
@@ -226,7 +231,7 @@ def displayCurrentTrip():
         counter = 1
         dash = 0
 
-        for i in range(inputStack, len(inputStops) - 1):
+        for i in range(len(inputStops) - inputStack - 1):
             route = AirportGraph.findPath(inputStops[i], inputStops[i + 1])
             print(str(counter) + ". ", end="")
 
@@ -240,7 +245,7 @@ def displayCurrentTrip():
             counter+=1
             dash = 0
     print()           
-    print("Total distance: ")
+    print("Total distance: ", end="")
     tripDistance = 0
     for miles in totalTripMilage:
         tripDistance+=miles
